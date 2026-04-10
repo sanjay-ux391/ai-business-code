@@ -1,0 +1,104 @@
+// Version: 1.0.0
+type AppointmentStatus__105197975 = {#cancelled; #completed; #scheduled};
+type Appointment__198984327 =
+  {
+    customerId : Nat;
+    customerName : Text;
+    date : Text;
+    id : Nat;
+    notes : Text;
+    service : Text;
+    status : AppointmentStatus__105197975;
+    time : Text
+  };
+type CustomerSegment__606262492 = {#AtRisk; #New; #Regular; #VIP};
+type Customer__192853522 =
+  {
+    avatar : Text;
+    id : Nat;
+    lastVisit : Text;
+    name : Text;
+    phone : Text;
+    segment : CustomerSegment__606262492;
+    totalSpent : Nat;
+    visitCount : Nat
+  };
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type FeedbackCategory__148879515 = {#complaint; #compliment; #suggestion};
+type Feedback__34322984 =
+  {
+    category : FeedbackCategory__148879515;
+    createdAt : Text;
+    customerId : Nat;
+    customerName : Text;
+    id : Nat;
+    rating : Nat;
+    sentiment : Sentiment__875339412;
+    text : Text
+  };
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type OrderStatus__591380551 = {#cancelled; #completed; #confirmed; #pending};
+type Order__720360493 =
+  {
+    aiDiscount : Nat;
+    campaignType : Text;
+    createdAt : Text;
+    customerId : Nat;
+    id : Nat;
+    items : Text;
+    status : OrderStatus__591380551;
+    totalAmount : Nat
+  };
+type PaymentMethod__736241749 = {#card; #cash; #upi};
+type PaymentStatus__299084309 = {#completed; #pending; #refunded};
+type Payment__944866998 =
+  {
+    amount : Nat;
+    customer : Text;
+    date : Text;
+    discount : Nat;
+    id : Nat;
+    items : Text;
+    method : PaymentMethod__736241749;
+    status : PaymentStatus__299084309
+  };
+type Sentiment__875339412 = {#negative; #neutral; #positive};
+actor {
+  stable appointments :
+    {
+      var root : Node__46230540<Nat, Appointment__198984327>;
+      var size : Nat__490723111
+    };
+  stable customers :
+    {
+      var root : Node__46230540<Nat, Customer__192853522>;
+      var size : Nat__490723111
+    };
+  stable feedbacks :
+    {
+      var root : Node__46230540<Nat, Feedback__34322984>;
+      var size : Nat__490723111
+    };
+  stable var nextAppointmentId : Nat;
+  stable var nextCustomerId : Nat;
+  stable var nextFeedbackId : Nat;
+  stable var nextOrderId : Nat;
+  stable var nextPaymentId : Nat;
+  stable orders :
+    {
+      var root : Node__46230540<Nat, Order__720360493>;
+      var size : Nat__490723111
+    };
+  stable payments :
+    {
+      var root : Node__46230540<Nat, Payment__944866998>;
+      var size : Nat__490723111
+    }
+};

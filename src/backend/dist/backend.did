@@ -1,0 +1,198 @@
+type Sentiment = 
+ variant {
+   negative;
+   neutral;
+   positive;
+ };
+type Result_1 = 
+ variant {
+   err: text;
+   ok: nat;
+ };
+type Result = 
+ variant {
+   err: text;
+   ok;
+ };
+type PaymentStatus = 
+ variant {
+   completed;
+   pending;
+   refunded;
+ };
+type PaymentMethod = 
+ variant {
+   card;
+   cash;
+   upi;
+ };
+type PaymentInput = 
+ record {
+   amount: nat;
+   customer: text;
+   date: text;
+   discount: nat;
+   items: text;
+   method: PaymentMethod;
+   status: PaymentStatus;
+ };
+type Payment = 
+ record {
+   amount: nat;
+   customer: text;
+   date: text;
+   discount: nat;
+   id: nat;
+   items: text;
+   method: PaymentMethod;
+   status: PaymentStatus;
+ };
+type OrderStatus = 
+ variant {
+   cancelled;
+   completed;
+   confirmed;
+   pending;
+ };
+type OrderInput = 
+ record {
+   aiDiscount: nat;
+   campaignType: text;
+   createdAt: text;
+   customerId: nat;
+   items: text;
+   status: OrderStatus;
+   totalAmount: nat;
+ };
+type Order = 
+ record {
+   aiDiscount: nat;
+   campaignType: text;
+   createdAt: text;
+   customerId: nat;
+   id: nat;
+   items: text;
+   status: OrderStatus;
+   totalAmount: nat;
+ };
+type FeedbackInput = 
+ record {
+   category: FeedbackCategory;
+   createdAt: text;
+   customerId: nat;
+   customerName: text;
+   rating: nat;
+   sentiment: Sentiment;
+   "text": text;
+ };
+type FeedbackCategory = 
+ variant {
+   complaint;
+   compliment;
+   suggestion;
+ };
+type Feedback = 
+ record {
+   category: FeedbackCategory;
+   createdAt: text;
+   customerId: nat;
+   customerName: text;
+   id: nat;
+   rating: nat;
+   sentiment: Sentiment;
+   "text": text;
+ };
+type DashboardStats = 
+ record {
+   activeNow: nat;
+   ordersToday: nat;
+   totalCustomers: nat;
+   totalRevenue: nat;
+ };
+type CustomerSegment = 
+ variant {
+   AtRisk;
+   New;
+   Regular;
+   VIP;
+ };
+type CustomerInput = 
+ record {
+   avatar: text;
+   lastVisit: text;
+   name: text;
+   phone: text;
+   segment: CustomerSegment;
+   totalSpent: nat;
+   visitCount: nat;
+ };
+type Customer = 
+ record {
+   avatar: text;
+   id: nat;
+   lastVisit: text;
+   name: text;
+   phone: text;
+   segment: CustomerSegment;
+   totalSpent: nat;
+   visitCount: nat;
+ };
+type AppointmentStatus = 
+ variant {
+   cancelled;
+   completed;
+   scheduled;
+ };
+type AppointmentInput = 
+ record {
+   customerId: nat;
+   customerName: text;
+   date: text;
+   notes: text;
+   "service": text;
+   status: AppointmentStatus;
+   time: text;
+ };
+type Appointment = 
+ record {
+   customerId: nat;
+   customerName: text;
+   date: text;
+   id: nat;
+   notes: text;
+   "service": text;
+   status: AppointmentStatus;
+   time: text;
+ };
+service : {
+  createAppointment: (input: AppointmentInput) -> (Result_1);
+  createCustomer: (input: CustomerInput) -> (Result_1);
+  createFeedback: (input: FeedbackInput) -> (Result_1);
+  createOrder: (input: OrderInput) -> (Result_1);
+  createPayment: (input: PaymentInput) -> (Result_1);
+  deleteAppointment: (id: nat) -> (Result);
+  deleteCustomer: (id: nat) -> (Result);
+  deleteFeedback: (id: nat) -> (Result);
+  deleteOrder: (id: nat) -> (Result);
+  deletePayment: (id: nat) -> (Result);
+  filterPayments: (status: opt text, method: opt text) -> (vec Payment) query;
+  getAppointment: (id: nat) -> (opt Appointment) query;
+  getCustomer: (id: nat) -> (opt Customer) query;
+  getCustomerPayments: (customerName: text) -> (vec Payment) query;
+  getDashboardStats: () -> (DashboardStats) query;
+  getFeedback: (id: nat) -> (opt Feedback) query;
+  getOrder: (id: nat) -> (opt Order) query;
+  getPayment: (id: nat) -> (opt Payment) query;
+  listAppointments: () -> (vec Appointment) query;
+  listCustomers: () -> (vec Customer) query;
+  listFeedbacks: () -> (vec Feedback) query;
+  listOrders: () -> (vec Order) query;
+  listPayments: () -> (vec Payment) query;
+  searchPayments: (queryText: text) -> (vec Payment) query;
+  seedInitialData: () -> ();
+  updateAppointment: (id: nat, input: AppointmentInput) -> (Result);
+  updateCustomer: (id: nat, input: CustomerInput) -> (Result);
+  updateFeedback: (id: nat, input: FeedbackInput) -> (Result);
+  updateOrder: (id: nat, input: OrderInput) -> (Result);
+  updatePayment: (id: nat, input: PaymentInput) -> (Result);
+}
