@@ -206,9 +206,3 @@ This application uses Instagram login via OAuth:
 MIT License
 
 ---
-
-## 14. Author
-
-**Sanjay**
-📧 [your-email@sanjaypriyan0987@gmail.com]
-🔗 GitHub: https://github.com/sanjay-ux391
