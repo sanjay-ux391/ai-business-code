@@ -210,5 +210,5 @@ MIT License
 ## 14. Author
 
 **Sanjay**
-📧 [your-email@example.com](mailto:your-email@example.com)
-🔗 GitHub: https://github.com/yourusername
+📧 [your-email@sanjaypriyan0987@gmail.com]
+🔗 GitHub: https://github.com/sanjay-ux391
